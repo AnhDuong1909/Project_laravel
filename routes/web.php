@@ -1,4 +1,6 @@
 <?php
+use Carbon\Traits\Rounding;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +20,19 @@ Route::get('index',[
     'as'=>'trangchu',
     'uses'=>'PageController@getIndex'
 ]);
+
+Route::group(['prefix' => 'admin'], function () {
+
+    Route::get('/', 'UsersController@index');
+
+    Route::resource('/bills', 'BillsController');
+    Route::resource('/phone', 'PhoneController');
+    Route::resource('/accessory', 'AccessoryController');
+    Route::resource('/product_colors', 'Product_colorsController');
+    Route::resource('/product_images', 'Product_imagesController');
+    Route::resource('/colors', 'ColorsController');
+    Route::resource('/images', 'ImagesController');
+    Route::resource('/news', 'NewsController');
+    Route::resource('/users','UsersController');
+
+});
