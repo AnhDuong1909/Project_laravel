@@ -37,7 +37,57 @@ class AccessoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'classify' => 'required',
+            'name' => 'required',
+            'manufacturer' => 'required',
+            'nsx' => 'date',
+            'price' =>'required|numeric',
+            'status' => 'required',
+
+            'man_hinh' => '',
+            'he_dieu_hanh' => '',
+            'camera_truoc' => '',
+            'camera_sau' => '',
+            'ram' => '',
+            'bo_nho_trong' => '',
+            'dung_luong_pin' => '',
+          
+            'sale_off_status' => 'required',
+            'sale_off_percent' => 'numeric|min:0|max:100',
+            'sale_off_start' => 'date',
+            'sale_off_end' => 'date',
+           
+            'introduce' => 'required|max:5000'
+        ]);
+
+        $phone = new Product();
+        $phone->classify = $request->classify;
+        $phone->name = $request->name;
+        $phone->manufacturer = $request->manufacturer;
+        $phone->nsx = $request->nsx;
+        $phone->price = $request->price;
+        $phone->status = $request->status;
+
+        $phone->man_hinh = 'null';
+        $phone->he_dieu_hanh = 'null';
+        $phone->camera_truoc = 'null';
+        $phone->camera_sau = 'null';
+        $phone->ram = 'null';
+        $phone->bo_nho_trong = 'null';
+        $phone->dung_luong_pin = 'null';
+
+        $phone->sale_off_status = $request->sale_off_status;
+        $phone->sale_off_percent = $request->sale_off_percent;
+        $phone->sale_off_start = $request->sale_off_start;
+        $phone->sale_off_end = $request->sale_off_end;
+
+        $phone->introduce = $request->introduce;
+
+
+        $phone->save();
+
+        return redirect()->route('accessory.create')->with('success','insert new record success');
     }
 
     /**
@@ -59,7 +109,8 @@ class AccessoryController extends Controller
      */
     public function edit($id)
     {
-        echo view('admin.accessory.edit');
+        $accessory = Product::find($id);
+        echo view('admin.accessory.edit',compact('accessory','id'));
 
     }
 
@@ -72,7 +123,57 @@ class AccessoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            // 'classify' => 'required',
+            'name' => 'required',
+            'manufacturer' => 'required',
+            'nsx' => 'date',
+            'price' =>'required|numeric',
+            'status' => 'required',
+
+            'man_hinh' => '',
+            'he_dieu_hanh' => '',
+            'camera_truoc' => '',
+            'camera_sau' => '',
+            'ram' => '',
+            'bo_nho_trong' => '',
+            'dung_luong_pin' => '',
+          
+            'sale_off_status' => 'required',
+            'sale_off_percent' => 'numeric|min:0|max:100',
+            'sale_off_start' => 'date',
+            'sale_off_end' => 'date',
+           
+            'introduce' => 'required|max:5000'
+        ]);
+
+        $phone = Product::find($id);
+        // $phone->classify = $request->classify;
+        $phone->name = $request->name;
+        $phone->manufacturer = $request->manufacturer;
+        $phone->nsx = $request->nsx;
+        $phone->price = $request->price;
+        $phone->status = $request->status;
+
+        $phone->man_hinh = 'null';
+        $phone->he_dieu_hanh = 'null';
+        $phone->camera_truoc = 'null';
+        $phone->camera_sau = 'null';
+        $phone->ram = 'null';
+        $phone->bo_nho_trong = 'null';
+        $phone->dung_luong_pin = 'null';
+
+        $phone->sale_off_status = $request->sale_off_status;
+        $phone->sale_off_percent = $request->sale_off_percent;
+        $phone->sale_off_start = $request->sale_off_start;
+        $phone->sale_off_end = $request->sale_off_end;
+
+        $phone->introduce = $request->introduce;
+
+
+        $phone->save();
+
+        return redirect()->route('accessory.index')->with('success','update record success');
     }
 
     /**
@@ -83,8 +184,9 @@ class AccessoryController extends Controller
      */
     public function destroy($id)
     {
-        // $destroy = DB::table('products')->find($id);
-        // $destroy->delete();
-        // return redirect()->route('accessory')->with('success,Data Deleted');
+        $phone = Product::find($id);
+        $phone->delete();
+
+        return redirect(url()->previous())->with('success','Delete success');
     }
 }

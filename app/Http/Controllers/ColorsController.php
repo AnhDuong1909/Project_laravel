@@ -38,21 +38,16 @@ class ColorsController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request,[
-            'name' => 'required|min:5'
+            'name' => 'required|max:100'
         ]);
 
-        
         $color = new Color();
         $color->name = $request->name;
         $color->save();
 
-        // $name = $request->name;
-        // DB::table('colors')->insert([
-        //     'name' => $name
-        // ]);
-
-        return redirect()->route('colors.create');
+        return redirect()->route('colors.create')->with('success','insert new record success');
     }
 
     /**
@@ -74,7 +69,8 @@ class ColorsController extends Controller
      */
     public function edit($id)
     {
-        echo view('admin.colors.edit');        
+        $color = Color::find($id);
+        echo view('admin.colors.edit',compact('color','id'));      
     }
 
     /**
@@ -86,7 +82,15 @@ class ColorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|max:100'
+        ]);
+
+        $color = Color::find($id);
+        $color->name = $request->name;
+        $color->save();
+
+        return redirect()->route('colors.index')->with('success','update record success');
     }
 
     /**
@@ -97,6 +101,10 @@ class ColorsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $color = Color::find($id);
+        $color->delete();
+
+        return redirect(url()->previous())->with('success','Delete success');
+    
     }
 }

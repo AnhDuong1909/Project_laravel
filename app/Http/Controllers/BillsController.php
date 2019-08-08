@@ -36,7 +36,26 @@ class BillsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'id_products' => 'required|numeric',
+            'id_users' => 'required|numeric',
+            'number' => 'required|numeric',
+            'date' => 'required|date',
+            'status' => 'required',
+            'vat' =>'required|numeric'
+        ]);
+
+        $bill = new Bill();
+        $bill->id_products = $request->id_products;
+        $bill->id_users = $request->id_users;
+        $bill->number = $request->number;
+        $bill->date = $request->date;
+        $bill->status = $request->status;
+        $bill->vat = $request->vat;
+
+        $bill->save();
+
+        return redirect()->route('bills.create')->with('success','insert new record success');
     }
 
     /**
@@ -81,6 +100,9 @@ class BillsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bill = Bill::find($id);
+        $bill->delete();
+
+        return redirect(url()->previous())->with('success','Delete success');
     }
 }

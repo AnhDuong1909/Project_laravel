@@ -1,16 +1,19 @@
-@extends('layouts.admin')
+@extends('layouts.admin');
 @section('content')
 <div class="box box-primary">
-    <div class="box-header with-border">
-      <h3 class="box-title">Quick Example</h3>
-    </div>
-    <!-- /.box-header -->
+      <h1>Create Color</h1>
+
+      @include('admin.notification')
+      <br>
+
     <!-- form start -->
     <form role="form" method="POST" action="{{ route('colors.store') }}">
-        @csrf 
-      <div class="box-body">
-          <label for="exampleInputEmail1">name</label>
-          <input type="text" class="form-control" name="name" placeholder="Enter name color">
+        @csrf
+    <div class="box-body">
+        <div >
+            <label >Name of color</label><br>
+            <input type="text" name="name" placeholder="Enter name">
+        </div>
       </div>
       <!-- /.box-body -->
 

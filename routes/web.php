@@ -34,5 +34,4 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('/images', 'ImagesController');
     Route::resource('/news', 'NewsController');
     Route::resource('/users','UsersController');
-
 });

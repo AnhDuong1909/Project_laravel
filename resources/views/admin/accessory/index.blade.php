@@ -1,48 +1,39 @@
-{{-- ----------------------------Handle Delete------------------ --}}
-@php
-    if (isset($_GET["id_delete"])) {
-        $id = $_GET["id_delete"];
-        DB::table('products')->where('id_products',$id)->delete();
-    }
-@endphp
-{{-- ----------------------------end delete ----------------------------- --}}
-
 @extends('layouts.admin')
 @section('content')
       <table class="table table-hover">
                     {{-- ----------------------- phone---------------------------- --}}
                 <h1>         Accessory               </h1>
-                @if($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-                @endif
+                
+                @include('admin.notification')
+
+
                 <p><a href="{{ url('admin/accessory/create') }}"  class="btn btn-success">Add new</a></p>
 
                 <div>
                     @foreach ($list as $r)
                         @if ($r->classify == 'accessory')
                             <p>
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample{{$r->id_products}}" aria-expanded="false" aria-controls="collapseExample{{$r->id_products}}">
-                                    <span class="product_column1">id_products</span>
-                                    <span class="product_column2">{{$r->id_products}}</span>
-
-                                    <span class="product_column1">name</span>
-                                    <span class="product_column2">{{$r->name}}</span>
+                                <button class="btn btn-primary abc" type="button" data-toggle="collapse" data-target="#collapseExample{{$r->id_products}}" aria-expanded="false" aria-controls="collapseExample{{$r->id_products}}">
+                                    <div>id :  
+                                        <span >{{$r->id_products}}</span>
+                                        / 
+                                        <span >{{ $r->name }}</span>
+                                    </div>
                                 </button>
-                                {{-- ------------------delete ----------------- --}}
-                                <a  class="btn btn-info" href="{{ url('admin/accessory/edit') }}">Edit</a>
-                                <a  class="btn btn-danger" href="?id_delete={{ $r->id_products }}">Delete</a>
-                                {{-- <span>
-                                    <form action="{{ action('AccessoryController@destroy',$r->id_products)}}" method="POST" class="delete_form">
+                                {{-- ------------------ ----------------- --}}
+                              
+                                <a  class="btn btn-info" href="{{ action('AccessoryController@edit',$r->id_products) }}">Edit</a>
+                                                               
+                                <form class="delete_form " action="{{ action('AccessoryController@destroy',$r->id_products) }} " method="POST">
                                         @csrf
-                                        {{-- <input type="hidden" name="_method" value="DELETE"> --}}
-                                        {{-- <input type="hidden" name="_method" value="DELETE"> --}}
-                                        {{-- @method('DELETE'); --}}
-                                        {{-- <button type="submit" class="btn btn-danger">Delete</button> --}}
-                                    {{-- </form> --}}
-                                {{-- </span>  --}}
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger delete">Delete</button>
+                                </form> 
+                          
                             </p>
+
+
+
                             <div class="collapse" id="collapseExample{{$r->id_products}}">
                                 <div class="card card-body">
                                     <span class="product_column1">id_products</span>
@@ -105,17 +96,16 @@
 
     {{ $list->links() }}
 
-    {{-- <script>
-        $(document).ready(function(){
-            $('.delete_form').on('submit',function(){
-                if(confirm('Are you sure to delete id ??')){
-                    return true;
-                } else
-                {
-                    return false;
-                }
-            })
-        })
-    </script> --}}
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".delete_form").on('submit', function () {
+            if(confirm("Delete : Are you sure ?")){
+                return true;
+            } else{
+                return false;
+            }
+        });
+    });
+</script>
 @endsection

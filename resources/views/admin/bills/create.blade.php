@@ -4,29 +4,46 @@
     <div class="box-header with-border">
       <h3 class="box-title">Add new</h3>
     </div>
-    <!-- /.box-header -->
+
+
+@include('admin.notification')
+
     <!-- form start -->
-    <form role="form">
+    <form role="form" method="POST" action="{{ route('bills.store') }}">
+        @csrf
       <div class="box-body">
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+          <label for="exampleInputEmail1">id_products</label><br>
+          <input type="number" name="id_products" id="" placeholder="id products">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <label for="exampleInputEmail1">id_users</label><br>
+                <input type="number" name="id_users" id="" placeholder="id users">
         </div>
         <div class="form-group">
-          <label for="exampleInputFile">File input</label>
-          <input type="file" id="exampleInputFile">
-
-          <p class="help-block">Example block-level help text here.</p>
+                <label for="exampleInputEmail1">number of products</label><br>
+                <input type="number" name="number" id="" placeholder="number of products">
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"> Check me out
-          </label>
+        <div class="form-group">
+                <label for="exampleInputEmail1">date</label><br>
+                <input type="date" name="date" id="" value="{{  date('Y-m-d') }}"  >
         </div>
+        <br>
+        <div>
+                <label><b>Status</b></label>
+                <div class="form-check">
+                          <input type="radio"  name="status" value="done" checked>done
+                  </div>
+                <div class="form-check">
+                      <input type="radio"  name="staus" value="waiting" >waiting
+                  </div>
+            </div>
+            <br>
+        <div class="form-group">
+                <label for="exampleInputEmail1">VAT</label><br>
+                <input type="numbet" name="vat" id="" value="" placeholder="%">
+        </div>
+        
       </div>
       <!-- /.box-body -->
 

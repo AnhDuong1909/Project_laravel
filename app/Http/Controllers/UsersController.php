@@ -37,7 +37,27 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'username' => 'required',
+            'pwd' => 'required',
+            'phone' => 'numeric',
+            'email' => '',
+            'address' =>'',
+            'fullname' => ''
+        ]);
+
+        $user = new User();
+        $user->username = $request->username;
+        $user->pwd = $request->pwd;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->fullname = $request->fullname;
+
+
+        $user->save();
+
+        return redirect()->route('users.create')->with('success','insert new record success ');
     }
 
     /**
@@ -59,7 +79,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        echo view('admin.users.edit');
+        $user = User::find($id);
+        echo view('admin.users.edit',compact('user','id'));
     }
 
     /**
@@ -71,7 +92,27 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            // 'username' => 'required',
+            // 'pwd' => 'required',
+            'phone' => 'numeric',
+            // 'email' => '',
+            'address' =>'',
+            'fullname' => ''
+        ]);
+
+        $user = User::find($id);
+        // $user->username = $request->username;
+        // $user->pwd = $request->pwd;
+        $user->phone = $request->phone;
+        // $user->email = $request->email;
+        $user->address = $request->address;
+        $user->fullname = $request->fullname;
+
+
+        $user->save();
+
+        return redirect()->route('users.index')->with('success','update record success ');
     }
 
     /**
@@ -82,6 +123,9 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect(url()->previous())->with('success','Delete success');
     }
 }

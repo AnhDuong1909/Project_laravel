@@ -5,12 +5,14 @@
 @extends('layouts.admin')
 @section('content')
 <div class="box box-primary">
-    <div class="box-header with-border">
-      <h3 class="box-title">Add new</h3>
-    </div>
-    <!-- /.box-header -->
+    <h1>Create Phone</h1>
+
+
+    @include('admin.notification')
+
     <!-- form start -->
-    <form role="form" action="" method="">
+    <form role="form" action="{{ route('phone.store') }}" method="post">
+        @csrf
       <div class="box-body">
             <div>
                 <label><b>Classify</b></label>
@@ -28,58 +30,64 @@
         </div>
         <div class="form-group">
             <label >nsx</label>
-            <input type="date" class="form-control" placeholder="" name="nsx">
+            <input type="date" class="form-control" value="{{  date('Y-m-d') }}" name="nsx">
         </div>
         <div class="form-group">
             <label >price</label>
-            <input type="number" class="form-control" placeholder="$" name="price">
+            <input type="number" class="form-control" value="{{  date('Y-m-d') }}" name="price">
         </div>
         <div class="input-group mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">status  </label>
-            <select class="custom-select" id="inputGroupSelect01">
-              <option value="on" name="status" selected>on</option>
-              <option value="off" name="status">off</option>
+              <label class="input-group-text"  >status  </label>
+              <br>
+            <select class="custom-select"  name="status">
+              <option value="on" selected>on</option>
+              <option value="off" >off</option>
             </select>
           </div>
           <br>
+
+
         <h4>---------- imformation -----------</h4>
         <div class="form-group">
             <label >man_hinh</label>
-            <input type="text" class="form-control" placeholder="man hinh" name="man_hinh">
+            <input type="text" class="form-control" value="null" placeholder="man hinh" name="man_hinh">
         </div>
         <div class="form-group">
             <label >he_dieu_hanh</label>
-            <input type="text" class="form-control" placeholder="he dieu hanh" name="he_dieu_hanh">
+            <input type="text" class="form-control" value="null" placeholder="he dieu hanh" name="he_dieu_hanh">
         </div>
         <div class="form-group">
             <label >camera_truoc</label>
-            <input type="text" class="form-control" placeholder="camera truoc" name="camera_truoc">
+            <input type="text" class="form-control" value="null" placeholder="camera truoc" name="camera_truoc">
         </div>
         <div class="form-group">
             <label >camera_sau</label>
-            <input type="text" class="form-control" placeholder="cemera sau" name="camera_sau">
+            <input type="text" class="form-control" value="null" placeholder="cemera sau" name="camera_sau">
         </div>
         <div class="form-group">
             <label >ram</label>
-            <input type="text" class="form-control" placeholder="ram" name="ram">
+            <input type="text" class="form-control" value="null" placeholder="ram" name="ram">
         </div>
         <div class="form-group">
             <label >bo_nho_trong</label>
-            <input type="text" class="form-control" placeholder="bo nho trong" name="bo_nho_trong">
+            <input type="text" class="form-control" value="null" placeholder="bo nho trong" name="bo_nho_trong">
         </div>
         <div class="form-group">
             <label >dung_luong_pin</label>
-            <input type="text" class="form-control" placeholder="dung luong pin" name="dung_luong_pin">
+            <input type="text" class="form-control" value="null" placeholder="dung luong pin" name="dung_luong_pin">
         </div>
-
         <br><br>
+
+
+
         <h3>------------- Sale off ------------</h3>
         <br>
         <div class="input-group mb-3">
               <label class="input-group-text" for="inputGroupSelect01">sale_off_status</label>
-            <select class="custom-select" id="inputGroupSelect01">
-              <option value="on">on</option>
-              <option value="off" selected>off</option>
+              <br>
+            <select class="custom-select" name="sale_off_status">
+              <option value="on" >on</option>
+              <option value="off"  selected>off</option>
             </select>
           </div>
         <div class="form-group">
@@ -89,17 +97,18 @@
 
         <div class="form-group">
             <label >sale_off_start</label>
-            <input type="date" class="form-control" placeholder="" name="sale_off_start">
+            <input type="date" class="form-control" value="{{  date('Y-m-d') }}" name="sale_off_start">
         </div>
         <div class="form-group">
             <label >sale_off_end</label>
-            <input type="date" class="form-control" placeholder="" name="sale_off_end">
+            <input type="date" class="form-control" value="{{  date('Y-m-d') }}" name="sale_off_end">
         </div>
 
      {{-- --- introduce -- --}}
         <div class="form-group">
             <label >introduce</label>
-            <input type="text" class="form-control" placeholder="introduce" name="introduce">
+            <br>
+            <textarea name="introduce" cols="150"  rows="5"></textarea>        
         </div>
       </div>
 

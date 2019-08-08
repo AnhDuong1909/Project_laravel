@@ -1,33 +1,37 @@
-{{-- ----------------------------Handle Delete------------------ --}}
-@php
-    if (isset($_GET["id_delete"])) {
-        $id = $_GET["id_delete"];
-        DB::table('products')->where('id_products',$id)->delete();
-    }
-@endphp
-{{-- ----------------------------end delete ----------------------------- --}}
-
 @extends('layouts.admin')
 @section('content')
       <table class="table table-hover">
                     {{-- ----------------------- phone---------------------------- --}}
                 <h1>         phone               </h1>
+
+                      @include('admin.notification')
+
+                    <br><br>
+
+
                   <p><a href="{{ route('phone.create') }}"  class="btn btn-success">Add new</a></p>
                 <div>
                     @foreach ($list as $r)
                         @if ($r->classify == 'phone')
                             <p>
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample{{$r->id_products}}" aria-expanded="false" aria-controls="collapseExample{{$r->id_products}}">
-                                    <span class="product_column1">id_products</span>
-                                    <span class="product_column2">{{$r->id_products}}</span>
-
-                                    <span class="product_column1">name</span>
-                                    <span class="product_column2">{{ $r->name }}</span>
+                                <button class="btn btn-primary abc" type="button" data-toggle="collapse" data-target="#collapseExample{{$r->id_products}}" aria-expanded="false" aria-controls="collapseExample{{$r->id_products}}">
+                                    <div>id :  
+                                        <span >{{$r->id_products}}</span>
+                                        / 
+                                        <span >{{ $r->name }}</span>
+                                    </div>
                                 </button>
-                                {{-- ------------------delete ----------------- --}}
-                                <a  class="btn btn-danger" href="?id_delete={{ $r->id_products }}">Delete</a>
-                                <a  class="btn btn-info" href="{{ url('admin/phone/edit') }}">Edit</a>
+                                {{-- ------------------ ----------------- --}}
+
+                                    <a  class="btn btn-info" href="{{ action('PhoneController@edit',$r->id_products) }}">Edit</a>
+                                                               
+                                    <form class="delete_form " action="{{ action('PhoneController@destroy',$r->id_products) }} " method="POST">
+                                            @csrf
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="btn btn-danger delete">Delete</button>
+                                    </form>                          
                             </p>
+
                             <div class="collapse" id="collapseExample{{$r->id_products}}">
                                 <div class="card card-body">
                                     <span class="product_column1">id_products</span>
@@ -116,4 +120,18 @@
     </table>
 
     {{ $list->links() }}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".delete_form").on('submit', function () {
+            if(confirm("Delete : Are you sure ?")){
+                return true;
+            } else{
+                return false;
+            }
+        });
+    });
+</script>
 @endsection

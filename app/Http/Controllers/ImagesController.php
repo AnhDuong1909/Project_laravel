@@ -37,7 +37,18 @@ class ImagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|max:200',
+            'src' => 'required|max:200'
+        ]);
+
+        $image = new Image();
+        $image->name = $request->name;
+        $image->src = $request->src;
+
+        $image->save();
+
+        return redirect()->route('images.create')->with('success','insert new record success');
     }
 
     /**
@@ -59,7 +70,8 @@ class ImagesController extends Controller
      */
     public function edit($id)
     {
-        echo view('admin.images.edit');
+        $image = Image::find($id);
+        echo view('admin.images.edit',compact('image','id'));
         
     }
 
@@ -72,7 +84,19 @@ class ImagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|max:200',
+            'src' => 'required|max:200'
+        ]);
+
+        $image = Image::find($id);
+
+        $image->name = $request->name;
+        $image->src = $request->src;
+
+        $image->save();
+
+        return redirect()->route('images.index')->with('success','update record success');
     }
 
     /**
@@ -83,6 +107,9 @@ class ImagesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $image = Image::find($id);
+        $image->delete();
+
+        return redirect(url()->previous())->with('success','Delete success');
     }
 }

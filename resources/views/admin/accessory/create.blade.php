@@ -1,76 +1,83 @@
+@php
+    
+@endphp
+
 @extends('layouts.admin')
 @section('content')
 <div class="box box-primary">
-    <div class="box-header with-border">
-      <h3 class="box-title">Add new</h3>
-    </div>
-    <!-- /.box-header -->
+    <h1>Create Accessory</h1>
+
+    @include('admin.notification')
+
     <!-- form start -->
-    <form role="form" action="" method="">
+    <form role="form" action="{{ route('accessory.store') }}" method="post">
+        @csrf
       <div class="box-body">
             <div>
-                    <label><b>Classify</b></label>
-                    <p><input type="text" name="classify" value="accessory" readonly></p>
-                </div>
-                <br>
-                <br>
+                <label><b>Classify</b></label>
+                <p><input type="text" name="classify" value="accessory" readonly></p>
+            </div>
+            <br>
+            <br>
         <div class="form-group">
           <label >name</label>
-          <input type="text" class="form-control" placeholder="name" name="username">
+          <input type="text" class="form-control" placeholder="name" name="name">
         </div>
         <div class="form-group">
             <label >manufacturer</label>
-            <input type="text" class="form-control" placeholder="" name="manufacturer">
+            <input type="text" class="form-control" placeholder="manufacturer" name="manufacturer">
         </div>
         <div class="form-group">
             <label >nsx</label>
-            <input type="date" class="form-control" placeholder="" name="nsx">
+            <input type="date" class="form-control" placeholder="" name="nsx" value="{{  date('Y-m-d') }}">
         </div>
         <div class="form-group">
             <label >price</label>
-            <input type="number" class="form-control" placeholder="" name="">
+            <input type="number" class="form-control" placeholder="$" name="price">
         </div>
         <div class="input-group mb-3">
-              <label class="input-group-text" for="inputGroupSelect01">status  </label>
-
-            <select class="custom-select" id="inputGroupSelect01">
+              <label class="input-group-text"  >status  </label>
+              <br>
+            <select class="custom-select"  name="status">
               <option value="on" selected>on</option>
-              <option value="off">off</option>
+              <option value="off" >off</option>
             </select>
           </div>
-        {{-- ---sale off -- --}}
-        <br><br>
-        <h3>--------- Sale off ----------</h3>
+          <br>
+
+
+        <h3>------------- Sale off ------------</h3>
         <br>
         <div class="input-group mb-3">
               <label class="input-group-text" for="inputGroupSelect01">sale_off_status</label>
-
-            <select class="custom-select" id="inputGroupSelect01">
-              <option value="on">   on</option>
-              <option value="off" selected>    off</option>
+              <br>
+            <select class="custom-select" name="sale_off_status">
+              <option value="on" >on</option>
+              <option value="off"  selected>off</option>
             </select>
           </div>
         <div class="form-group">
             <label >sale_off_percent</label>
-            <input type="number" class="form-control" placeholder="" name="">
+            <input type="number" class="form-control" placeholder="%" name="sale_off_percent">
         </div>
 
         <div class="form-group">
             <label >sale_off_start</label>
-            <input type="date" class="form-control" placeholder="" name="">
+            <input type="date" class="form-control"  name="sale_off_start" value="{{  date('Y-m-d') }}">
         </div>
         <div class="form-group">
             <label >sale_off_end</label>
-            <input type="date" class="form-control" placeholder="" name="">
+            <input type="date" class="form-control"  name="sale_off_end" value="{{  date('Y-m-d') }}">
         </div>
 
      {{-- --- introduce -- --}}
         <div class="form-group">
             <label >introduce</label>
-            <input type="text" class="form-control" placeholder="" name="">
+            <br>
+            <textarea name="introduce" cols="150"  rows="5"></textarea>        
         </div>
       </div>
-      <!-- /.box-body -->
+
 
       <div class="box-footer">
         <button type="submit" class="btn btn-primary">Submit</button>

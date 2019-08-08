@@ -1,20 +1,14 @@
-{{-- ----------------------------Handle Delete------------------ --}}
-@php
-    if (isset($_GET["id_delete"])) {
-        $id = $_GET["id_delete"];
-        DB::table('bills')->where('id_bills',$id)->delete();
-    }
-@endphp
-{{-- ----------------------------end delete ----------------------------- --}}
-
 @extends('layouts.admin')
 @section('content')
 
-<div class="box-header">
-    <h1 class="box-title">list of Bills</h1>
-    <p><a href="{{ url('admin/bills/create') }}"  class="btn btn-success">Add new</a></p>
-</div>
-<div class="box">
+    <h1 >Bills</h1>
+
+    @include('admin.notification')
+    <br><br>
+
+    {{-- if want edit , you can open followed line --}}
+    {{-- <a><a href="{{ url('admin/bills/create') }}"  class="btn btn-success">Add new</a></a> --}}
+    <div class="box">
 
     <!-- /.box-header -->
     <div class="box-body table-responsive no-padding">
@@ -40,17 +34,34 @@
           <td>{{$r->status}}</td>
           <td>{{$r->vat}}</td>
           <td>
-            <a  class="btn btn-danger" href="?id_delete={{ $r->id_bills }}">Delete</a>
-            <a  class="btn btn-info" href="{{ url('admin/bills/edit') }}">Edit</a>
-          </td>
+                <form class="delete_form" action="{{ action('BillsController@destroy',$r->id_bills) }} " method="POST">
+                        @csrf
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger ">Delete</button>
+                </form>
+        </td>
+          {{-- <td>
+            {{-- if want edit , you can open followed line --}}
+            {{-- <a  class="btn btn-info" href="{{ url('admin/bills/edit') }}">Edit</a> --}}
+          {{-- </td>  --}}
         </tr>
         @endforeach
       </tbody></table>
     </div>
-    <!-- /.box-body -->
   </div>
-
-
-
   {{$list->links()}}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".delete_form").on('submit', function () {
+            if(confirm("Delete : Are you sure ?")){
+                return true;
+            } else{
+                return false;
+            }
+        });
+    });
+</script>
 @endsection

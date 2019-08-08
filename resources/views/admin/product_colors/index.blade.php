@@ -1,18 +1,8 @@
-{{-- ----------------------------Handle Delete------------------ --}}
-@php
-    if (isset($_GET["id_delete"])) {
-        $id = $_GET["id_delete"];
-        DB::table('product_colors')->where('id_products',$id)->delete();
-    }
-@endphp
-{{-- ----------------------------end delete ----------------------------- --}}
-
-
 @extends('layouts.admin')
 @section('content')
 
-<div class="box-header">
-    <h1 class="box-title">list of product - colors</h1>
+<div>
+    <h1 >Product - Colors</h1>
     <p><a href="{{ url('admin/product_colors/create') }}"  class="btn btn-success">Add new</a></p>
 
 </div>

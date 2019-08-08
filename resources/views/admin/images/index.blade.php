@@ -1,18 +1,14 @@
-{{-- ----------------------------Handle Delete------------------ --}}
-@php
-    if (isset($_GET["id_delete"])) {
-        $id = $_GET["id_delete"];
-        DB::table('images')->where('id_images',$id)->delete();
-    }
-@endphp
-{{-- ----------------------------end delete ----------------------------- --}}
-
 @extends('layouts.admin')
 @section('content')
 
-<div class="box-header">
-    <h1 class="box-title">list of Images</h1>
-    <p><a href="{{ url('admin/images/create') }}"  class="btn btn-success">Add new</a></p>
+<div >
+    <h1>Images</h1>
+
+    @include('admin.notification')
+    <br>
+
+
+    <p><a href="{{ route('images.create') }}"  class="btn btn-success">Add new</a></p>
 
 </div>
 <div class="box">
@@ -33,8 +29,14 @@
           <td>{{$r->name}}</td>
           <td>{{$r->src}}</td>
           <td>
-            <a  class="btn btn-danger" href="?id_delete={{ $r->id_images }}">Delete</a>
-            <a  class="btn btn-info" href="{{ url('admin/images/edit') }}">Edit</a>
+            <a  class="btn btn-info" href="{{ action('ImagesController@edit',$r->id_images) }}">Edit</a>
+          </td>
+          <td>
+                <form class="delete_form" action="{{ action('ImagesController@destroy',$r->id_images) }} " method="POST">
+                        @csrf
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger delete">Delete</button>
+                </form>
           </td>
         </tr>
         @endforeach
@@ -46,4 +48,17 @@
 
 
   {{$list->links()}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".delete_form").on('submit', function () {
+            if(confirm("Delete : Are you sure ?")){
+                return true;
+            } else{
+                return false;
+            }
+        });
+    });
+</script>
 @endsection

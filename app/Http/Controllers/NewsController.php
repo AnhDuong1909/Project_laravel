@@ -38,7 +38,24 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'title' => 'required',
+            'content' => 'required',
+            'date' => 'required|date',
+            'author' => '',
+            'images' =>''
+        ]);
+
+        $news = new News();
+        $news->title = $request->title;
+        $news->content = $request->content;
+        $news->date = $request->date;
+        $news->author = $request->author;
+        $news->images = $request->images;
+
+        $news->save();
+
+        return redirect()->route('news.create')->with('success','insert new record success');
     }
 
     /**
@@ -60,8 +77,8 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        echo view('admin.news.edit');
-        
+        $news = News::find($id);
+        return view('admin.news.edit',compact('news','id'));
     }
 
     /**
@@ -73,7 +90,24 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'title' => 'required',
+            'content' => 'required',
+            'date' => 'required|date',
+            'author' => '',
+            'images' =>''
+        ]);
+
+        $news = News::find($id);
+        $news->title = $request->title;
+        $news->content = $request->content;
+        $news->date = $request->date;
+        $news->author = $request->author;
+        $news->images = $request->images;
+
+        $news->save();
+
+        return redirect()->route('news.index')->with('success','update record success');
     }
 
     /**
@@ -84,6 +118,11 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $news = News::find($id);
+        $news->delete();
+
+        ;
+        return redirect(url()->previous())->with('success','Delete success');
+
     }
 }

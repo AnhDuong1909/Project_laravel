@@ -1,32 +1,45 @@
 @extends('layouts.admin')
 @section('content')
 <div class="box box-primary">
-    <div class="box-header with-border">
-      <h3 class="box-title">Quick Example</h3>
-    </div>
+      <h1 class="box-title">Edit News</h1>
+
+
+      @include('admin.notification')
+
+
     <!-- /.box-header -->
     <!-- form start -->
-    <form role="form">
+    <form name="update_form" role="form" method="POST" action="{{ action('NewsController@update',$id) }}">
+        @csrf
+
+        <input type="hidden" name="_method" value="PATCH">
+
+        <div> id = {{ $id }}</div>
+        <br><br>
+
+
       <div class="box-body">
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+          <label >Title </label><br>
+          <input type="text" name="title"  placeholder="Enter title ">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label >content </label><br>
+            <textarea name="content" id="" cols="90" rows="5" placeholder="Enter content"></textarea>
         </div>
         <div class="form-group">
-          <label for="exampleInputFile">File input</label>
-          <input type="file" id="exampleInputFile">
+            <label >Date </label><br>
+            <input type="date" name="date" value="{{ date('Y-m-d') }}">
+            </div>
+        <div class="form-group">
+            <label >Author </label><br>
+            <input type="text" name="author" placeholder="Enter author">
+        </div>
+        <div class="form-group">
+                <label >Images path </label><br>
+                <input type="text" name="images" placeholder="Enter images path">
+            </div>
 
-          <p class="help-block">Example block-level help text here.</p>
-        </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"> Check me out
-          </label>
-        </div>
       </div>
       <!-- /.box-body -->
 
@@ -35,4 +48,18 @@
       </div>
     </form>
   </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+      $(document).ready(function () {
+          $('.update_form').on('submit',function(){
+              if(confirm('Update : Are you sure ? ')){
+                  return true;
+              }else {
+                  return false;
+              }
+          });
+      });
+  </script>
 @endsection

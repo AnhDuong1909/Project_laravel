@@ -1,26 +1,10 @@
-{{-- -------------------handing insert------------ --}}
-{{-- @php
-if(isset($_POST["classify"])){
-    $classify = $_POST["classify"];
-    $username = $_POST["username"];
-
-    DB::table('users')->insert([
-    ['classify' => "aa"
-    ,'username' => "aa"
-    ]
-    ]);
-}
-
-@endphp --}}
-{{-- -------------------end insert -------------- --}}
-
 @extends('layouts.admin')
 @section('content')
       <h1 class="box-title">Create new Users</h1>
 
-    <!-- /.box-header -->
-    <!-- form start -->
-    <form role="form" action="{{ url('addUsers') }}" method="POST">
+    @include('admin/notification')
+      <!-- form start -->
+    <form role="form" action="{{ url('admin/users') }}" method="POST">
     @csrf
         <div>
             <label><b>Classify = Role</b></label>
@@ -28,7 +12,7 @@ if(isset($_POST["classify"])){
                       <input type="radio" class="form-check-input" name="classify" value="admin" disabled>admin
               </div>
             <div class="form-check">
-                  <input type="radio" class="form-check-input" name="classify" value="users">users
+                  <input type="radio" class="form-check-input" name="classify" value="users" checked>users
               </div>
             <div class="form-check">
                   <input type="radio" class="form-check-input" name="classify" value="deliver" >deliver
