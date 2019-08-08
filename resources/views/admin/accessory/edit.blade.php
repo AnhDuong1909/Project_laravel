@@ -12,12 +12,12 @@
     @include('admin.notification')
 
     <!-- form start -->
-    <form role="form" method="POST" action="{{ action('AccessoryController@update',$id) }}">
+    <form class="update_form" role="form" method="POST" action="{{ action('AccessoryController@update',$id) }}">
             @csrf
     
             <input type="hidden" name="_method" value="PATCH">
     
-            <div>Wher id = {{ $id }}</div>
+            <div> id = {{ $id }}</div>
             <br><br>
     
  
@@ -95,4 +95,18 @@
       </div>
     </form>
   </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+      $(document).ready(function () {
+          $('.update_form').on('submit',function(){
+              if(confirm('Update : Are you sure ? ')){
+                  return true;
+              }else {
+                  return false;
+              }
+          });
+      });
+  </script>
 @endsection

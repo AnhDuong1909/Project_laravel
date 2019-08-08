@@ -9,7 +9,7 @@
 
     <!-- /.box-header -->
     <!-- form start -->
-    <form name="update_form" role="form" method="POST" action="{{ action('NewsController@update',$id) }}">
+    <form class="update_form" role="form" method="POST" action="{{ action('NewsController@update',$id) }}">
         @csrf
 
         <input type="hidden" name="_method" value="PATCH">
